@@ -14,7 +14,7 @@
     <url>https://github.com/mqtang/oaleft-snow</url>
 
     <properties>
-        <revision>1.0.0</revision>
+        <revision>1.0.2</revision>
         <springboot.version>3.0.3</springboot.version>
         <mybatis-springboot.version>3.0.1</mybatis-springboot.version>
         <maven.compiler.source>17</maven.compiler.source>
