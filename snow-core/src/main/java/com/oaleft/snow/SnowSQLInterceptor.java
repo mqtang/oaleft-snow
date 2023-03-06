@@ -54,11 +54,18 @@ public final class SnowSQLInterceptor implements Interceptor {
 
     private final SQLFormatter sqlFormatter = new HibernateSQLFormatter();
 
+    private final SnowConfiguration configuration;
+
+    public SnowSQLInterceptor(SnowConfiguration configuration) {
+        this.configuration = configuration;
+    }
+
     @Override
     public Object intercept(Invocation invocation) throws Throwable {
         Object rtn = invocation.proceed();
         try {
-            prepareAndLogSql(invocation);
+            if (!configuration.isDisabled())
+                prepareAndLogSql(invocation);
         } catch (Exception ex) {
             logger.error("SnowSQLInterceptor ::error", ex);
         }

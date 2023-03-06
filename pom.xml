@@ -10,7 +10,7 @@
     <packaging>pom</packaging>
 
     <name>OALeft Snow</name>
-    <description>A project for mybatis sql logging</description>
+    <description>A library for Mybatis SQL logging</description>
     <url>https://github.com/mqtang/oaleft-snow</url>
 
     <properties>

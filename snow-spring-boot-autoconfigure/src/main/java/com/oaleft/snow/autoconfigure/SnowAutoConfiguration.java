@@ -1,5 +1,6 @@
 package com.oaleft.snow.autoconfigure;
 
+import com.oaleft.snow.SnowConfiguration;
 import com.oaleft.snow.SnowLogger;
 import com.oaleft.snow.SnowSQLInterceptor;
 import org.apache.ibatis.session.SqlSession;
@@ -32,8 +33,6 @@ public class SnowAutoConfiguration implements InitializingBean {
     private final SnowProperties snowProperties;
     private final List<SqlSessionFactory> sessionFactories;
 
-    private final SnowSQLInterceptor snowSQLInterceptor = new SnowSQLInterceptor();
-
     public SnowAutoConfiguration(SnowProperties snowProperties, List<SqlSessionFactory> sessionFactories) {
         this.snowProperties = snowProperties;
         this.sessionFactories = sessionFactories;
@@ -44,6 +43,9 @@ public class SnowAutoConfiguration implements InitializingBean {
         if (Objects.isNull(sessionFactories) || sessionFactories.isEmpty()) {
             return;
         }
+        SnowConfiguration snowConfiguration = new SnowConfiguration();
+        snowConfiguration.setDisabled(SnowProperties.Mode.OFF == snowProperties.getMode());
+        SnowSQLInterceptor snowSQLInterceptor = new SnowSQLInterceptor(snowConfiguration);
         for (SqlSessionFactory factory : sessionFactories) {
             org.apache.ibatis.session.Configuration configuration = factory.getConfiguration();
             if (!configuration.getInterceptors().contains(snowSQLInterceptor)) {
